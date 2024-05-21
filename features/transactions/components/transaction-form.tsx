@@ -26,7 +26,7 @@ const apiSchema = insertTransactionSchema.omit({
     id: true
 })
 
-type FormValues = z.infer<typeof formSchema>
+type FormValues = z.input<typeof formSchema>
 type ApiFormValues = z.input<typeof apiSchema>
 
 type Props = {
