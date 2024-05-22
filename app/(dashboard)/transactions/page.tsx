@@ -64,7 +64,6 @@ const TrasnactionsPage = () => {
 
         createTransactions.mutate(data, {
             onSuccess: () => {
-                toast.success("Transactions imported successfully")
                 onCancelImport()
             }
         })
