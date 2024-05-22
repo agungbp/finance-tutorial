@@ -98,7 +98,7 @@ const app = new Hono()
                 .select({
                     date: transactions.date,
                     income: sql`SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(Number),
-                    expenses: sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(Number),
+                    expenses: sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ABS(${transactions.amount}) ELSE 0 END)`.mapWith(Number),
                 })
                 .from(transactions)
                 .innerJoin(accounts, eq(transactions.accountId, accounts.id))
@@ -119,9 +119,9 @@ const app = new Hono()
                 data: {
                     remainingAmount: currentPeriod.remaining,
                     remainingChange,
-                    income: currentPeriod.income,
+                    incomeAmount: currentPeriod.income,
                     incomeChange,
-                    expenses: currentPeriod.expenses,
+                    expensesAmount: currentPeriod.expenses,
                     expensesChange,
                     categories: finalCategories,
                     days
